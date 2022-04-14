@@ -4,7 +4,7 @@
 
 There is no real goal behind this project. Just out of my curiosity what if:
 
-  - launch a base Linux container (debian, alpine, etc)
+  - launch a base Linux container (debian, ubuntu, etc)
   - pull in Linux kernel & init system (systemd, OpenRC, etc)
   - dump container's filesystem to a disk image
   - install bootloader (syslinux) to this image...
@@ -16,7 +16,7 @@ Try it out:
 ```bash
 # 1. Build the image.
 #    Depending on your setup, you may need to preceed `make` with `sudo`.
-make debian  # or ubuntu, or alpine
+make debian  # or ubuntu
 
 # 2. Run it! Use username `root` and password `root` to log in.
 qemu-system-x86_64 -drive file=debian.img,index=0,media=disk,format=raw -m 4096

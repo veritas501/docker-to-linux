@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 set -e
 
@@ -10,11 +10,21 @@ echo_blue() {
     echo -e "\n${font_blue}${font_bold}${1}${font_end}"
 }
 
+# disk size in MBs (default 2048M)
+DISK_SIZE=2048
+
 echo_blue "[Create disk image]"
-dd if=/dev/zero of=/os/${DISTR}.img bs=$(expr 1024 \* 1024 \* 1024) count=1
+dd if=/dev/zero of=/os/${DISTR}.img bs=1M seek=$(expr 1 + $DISK_SIZE) count=1
 
 echo_blue "[Make partition]"
-sfdisk /os/${DISTR}.img < /os/partition.txt
+cat << EOF | sfdisk /os/${DISTR}.img
+label: dos
+label-id: 0x5d8b75fc
+device: new.img
+unit: sectors
+
+linux.img1 : start=2048, size=${DISK_SIZE}M, type=83, bootable
+EOF
 
 echo_blue "\n[Format partition with ext4]"
 losetup -D
