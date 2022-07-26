@@ -1,4 +1,4 @@
-FROM amd64/ubuntu:21.10
+FROM amd64/ubuntu:22.04
 LABEL com.iximiuz-project="docker-to-linux"
 RUN apt-get update -y
 RUN apt-get -y install \
